@@ -36,7 +36,7 @@ final class Web
 	public function result(): void
 	{
 		if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-			$this->homeController->handleRequest();
+			$this->homeController->result();
 			return;
 		}
 		$this->notFound();

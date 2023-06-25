@@ -29,23 +29,20 @@ class HomeController
         require_once './../views/form.php';
     }
 
-    public function handleRequest(): void
+    public function result(): void
     {
-        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-
-            if (!isset($_POST['csrf_token']) || $_POST['csrf_token'] !== $_SESSION['csrf_token']) {
-                die("CSRF validation failed.");
-            }
-
-            $data = htmlspecialchars($_POST['data'], ENT_QUOTES, 'UTF-8');
-
-            $id = $this->user->insertData($data);
-            $result = $this->user->getData($id);
-
-            $this->emailSender->sendEmail($data);
-            $this->smsSender->sendSMS($data);
-
-            require_once './../views/result.php';
+        if (!isset($_POST['csrf_token']) || $_POST['csrf_token'] !== $_SESSION['csrf_token']) {
+            die("CSRF validation failed.");
         }
+
+        $data = htmlspecialchars($_POST['data'], ENT_QUOTES, 'UTF-8');
+
+        $id = $this->user->insertData($data);
+        $result = $this->user->getData($id);
+
+        $this->emailSender->sendEmail($data);
+        $this->smsSender->sendSMS($data);
+
+        require_once './../views/result.php';
     }
 }
